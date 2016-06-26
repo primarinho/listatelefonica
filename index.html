@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="listaTelefonica">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista Telefonica</title>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <style>
+  .jumbotron{ width: 400px; margin: 20px auto; text-align: center; padding: 20px; }
+  .selecionado { background-color: #f9ffc4!important; }
+  </style>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="js/lista.js"></script>
+</head>
+<body ng-controller="listaTelefonicaController">
+  <div class="jumbotron">
+    <h3>{{app}}</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td></td>
+          <td><strong>Nome</strong></td>
+          <td><strong>Telefone</strong></td>
+          <td><strong>Operadora</strong></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-class="{selecionado: contato.selecionado}" ng-repeat="contato in contatos">
+          <td><input type="checkbox" ng-model="contato.selecionado"></td>
+          <td>{{contato.nome}}</td>
+          <td>{{contato.telefone}}</td>
+          <td>{{contato.operadora.nome}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <form>
+      <div class="form-group">
+        <input type="text" class="form-control" ng-model="contato.nome" placeholder="Nome" autofocus />
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" ng-model="contato.telefone" placeholder="Telefone" />
+      </div>
+      <div class="form-group">
+        <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome for operadora in operadoras">
+          <option value="" disabled="">Selecione uma Operadora</option>
+        </select>
+      </div>
+      <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone || !contato.operadora">Adicionar Contato</button>
+      <button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-disabled="!isContatoSelecionado(contatos)">Apagar Contatos</button>
+    </form>
+  </div>
+</body>
+</html>
